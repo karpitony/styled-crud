@@ -1,5 +1,7 @@
 import express, { Response, Request } from 'express';
 import dotenv from 'dotenv';
+import { swaggerSpecs } from './swagger';
+import swaggerUi from 'swagger-ui-express';
 
 import corsConfig from './config/corsConfig';
 import { connectDB } from './database/db';
@@ -23,11 +25,14 @@ app.use(express.urlencoded({ extended: true }));
     const db = await connectDB();
     app.set('db', db); // 데이터베이스 객체를 전역으로 설정
 
+    // Swagger UI 세팅
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+    
     // 라우터
     app.get('/', (req: Request, res: Response) => {
       res.send('Hello, world!');
     });
-    
+
     app.use('/auth', authRoutes);
 
     // 에러 핸들러 (항상 마지막)
@@ -35,6 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs`);
     });
   } catch (err) {
     console.error('데이터베이스 연결 실패:', err);
