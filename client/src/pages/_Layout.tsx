@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import Header from '@/components/Header/Header';
+import Header from '@/components/layout/Header/Header';
 
 export default function _Layout() {
   return (
