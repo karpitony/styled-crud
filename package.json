@@ -4,9 +4,17 @@
     "private": true,
     "scripts": {
         "install:all": "npm install --prefix client && npm install --prefix server",
-        "dev": "concurrently \"npm start --prefix client\" \"npm start --prefix server\"",
-        "build": "npm run build --prefix client && npm run build --prefix server",
-        "start": "npm run start --prefix server"
+
+        "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+        "dev:client": "npm run dev --prefix client", 
+        "dev:server": "npm run dev --prefix server",
+    
+        "build": "npm run build:client && npm run build:server",
+        "build:client": "npm run build --prefix client",
+        "build:server": "npm run build --prefix server",
+    
+        "start": "npm run start:server",
+        "start:server": "npm run start --prefix server"
     },
     "devDependencies": {
         "concurrently": "^8.2.0"
