@@ -1,10 +1,10 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+import sqlite3 from 'sqlite3';
+import path from 'path';
 
-function connectDB() {
+export function connectDB() {
   const db = new sqlite3.Database(
     path.join(__dirname, 'my-database.db'),
-    (err) => {
+    (err: any) => {
       if (err) {
         console.error('데이터베이스 연결 실패:', err.message);
       } else {
@@ -80,5 +80,3 @@ function connectDB() {
 
   return db;
 }
-
-module.exports = connectDB;
