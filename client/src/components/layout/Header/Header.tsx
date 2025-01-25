@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     <Nav>
-      <h1>간단 게시판</h1>
+      <h1 onClick={() => navigate('/')}>{'< 간단 게시판 />'}</h1>
       <DesktopUl>
         <Li><a href="/">메인</a></Li>
         <Li><a href="/post-list">전체글 보기</a></Li>
