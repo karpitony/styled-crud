@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { login, logout, refreshToken, registerUser } from '@/services/authService';
+import { login, refreshToken, registerUser } from '@/services/authService';
 import { useAuthStore } from '@/stores/authStore';
 import { saveToken, removeToken, getToken } from '@/utils/storageUtils';
 import { isTokenExpired } from '@/utils/jwtUtils';
@@ -26,8 +26,8 @@ export const useAuth = () => {
   );
 
   const handleLogin = useCallback(
-    async (username: string, password: string) => {
-      const response = await login({ username, password });
+    async (user_id: string, password: string) => {
+      const response = await login({ user_id, password });
       setToken(response.token);
       saveToken(response.token);
     },
@@ -36,7 +36,6 @@ export const useAuth = () => {
 
   const handleLogout = useCallback(
     async () => {
-      await logout();
       clearToken();
       removeToken();
     },
