@@ -1,4 +1,4 @@
-const cors = require('cors');
+import cors from 'cors';
 
 const corsOptions = {
   origin: 'http://localhost:3000', // React 앱의 도메인

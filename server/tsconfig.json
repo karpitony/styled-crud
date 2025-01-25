@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // 컴파일된 JavaScript의 버전
+    "module": "commonjs", // Node.js의 모듈 시스템
+    "rootDir": "./src", // TypeScript 파일의 기본 디렉터리
+    "outDir": "./dist", // 컴파일된 JavaScript 파일의 출력 디렉터리
+    "strict": true, // 엄격한 타입 검사
+    "esModuleInterop": true, // CommonJS와 ES 모듈 간 호환성
+    "skipLibCheck": true // 라이브러리 타입 검사 생략
+  },
+  "include": ["src/**/*"], // 포함할 파일 경로
+  "exclude": ["node_modules", "dist"] // 제외할 디렉터리
+}
