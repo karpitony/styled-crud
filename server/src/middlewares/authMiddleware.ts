@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
-module.exports = (req, res, next) => {
+module.exports = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -15,7 +16,7 @@ module.exports = (req, res, next) => {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded; // 사용자 정보를 요청 객체에 저장
     next();
-  } catch (err) {
+  } catch (err:any) {
     if (err.name === 'TokenExpiredError') {
       return res.status(401).json({ success: false, message: '토큰이 만료되었습니다.' });
     }
