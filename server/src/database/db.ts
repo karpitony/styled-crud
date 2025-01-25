@@ -19,7 +19,8 @@ export function connectDB() {
     db.run(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE NOT NULL,
+        username TEXT NOT NULL,  -- 닉네임은 중복 가능
+        user_id TEXT UNIQUE NOT NULL,  -- 로그인용 고유 ID
         password TEXT NOT NULL
       );
     `);
@@ -28,7 +29,8 @@ export function connectDB() {
     db.run(`
       CREATE TABLE IF NOT EXISTS boards (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE NOT NULL,
+        name TEXT UNIQUE NOT NULL,  -- 사용자에게 보여줄 게시판 이름
+        route TEXT UNIQUE NOT NULL,  -- 실제 URL 경로에서 사용할 문자열
         description TEXT
       );
     `);
@@ -40,7 +42,7 @@ export function connectDB() {
         board_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         title TEXT NOT NULL,
-        content TEXT NOT NULL,
+        content TEXT NOT NULL,  -- 게시글 내용은 필수
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (board_id) REFERENCES boards(id),
         FOREIGN KEY (user_id) REFERENCES users(id)
@@ -53,7 +55,7 @@ export function connectDB() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         post_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
-        content TEXT NOT NULL,
+        content TEXT NOT NULL,  -- 댓글 내용은 필수
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (post_id) REFERENCES posts(id),
         FOREIGN KEY (user_id) REFERENCES users(id)

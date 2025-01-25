@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { findUserByUsername, createUser } from '../models/userModel';
+import { createUser, findUserByUserID } from '../models/userModel';
 
 // 환경 변수에서 JWT 비밀키 가져오기
 const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
@@ -9,25 +9,26 @@ const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 // 요청 바디 타입 정의
 interface AuthRequestBody {
   username: string;
+  user_id: string; // 로그인, 마이페이지 라우트에 사용할 ID
   password: string;
 }
 
 // 회원가입
 export const register: RequestHandler = async (req, res) => {
   try {
-    const { username, password } = req.body as AuthRequestBody;
+    const { username, user_id, password } = req.body as AuthRequestBody;
 
     // 입력 값 유효성 검사
-    if (!username || !password || password.length < 6) {
+    if (!username || !user_id|| !password || password.length < 6) {
       res.status(400).json({
         success: false,
-        message: '사용자명과 6자 이상의 비밀번호를 입력하세요.',
+        message: '사용자명, 로그인용 ID, 6자 이상의 비밀번호를 입력하세요.',
       });
       return; // 여기서 함수 종료
     }
 
     const db = req.app.get('db');
-    const existingUser = await findUserByUsername(db, username);
+    const existingUser = await findUserByUserID(db, user_id);
 
     // 중복 사용자 확인
     if (existingUser) {
@@ -40,12 +41,12 @@ export const register: RequestHandler = async (req, res) => {
 
     // 비밀번호 해싱 및 사용자 등록
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userId = await createUser(db, username, hashedPassword);
+    const newUserId = await createUser(db, username, user_id, hashedPassword);
 
     res.status(201).json({
       success: true,
       message: '회원가입 성공',
-      id: userId,
+      id: newUserId,
     });
   } catch (err: any) {
     console.error('회원가입 에러:', err.message);
@@ -60,10 +61,10 @@ export const register: RequestHandler = async (req, res) => {
 // 로그인
 export const login: RequestHandler = async (req, res) => {
   try {
-    const { username, password } = req.body as AuthRequestBody;
+    const { user_id, password } = req.body as AuthRequestBody;
 
     // 입력 값 유효성 검사
-    if (!username || !password) {
+    if (!user_id || !password) {
       res.status(400).json({
         success: false,
         message: '사용자명과 비밀번호를 입력하세요.',
@@ -72,7 +73,7 @@ export const login: RequestHandler = async (req, res) => {
     }
 
     const db = req.app.get('db');
-    const user = await findUserByUsername(db, username);
+    const user = await findUserByUserID(db, user_id);
 
     // 사용자 확인
     if (!user) {

@@ -3,7 +3,6 @@ import { register, login } from '../controllers/authController';
 
 const router = express.Router();
 
-
 /**
  * @swagger
  * tags:
@@ -18,7 +17,7 @@ const router = express.Router();
  *     summary: 회원가입
  *     tags: [Auth]
  *     requestBody:
- *       description: 회원가입 시 필요한 정보
+ *       description: 회원가입 시 필요한 정보 (사용자명, 로그인용 ID, 비밀번호)
  *       required: true
  *       content:
  *         application/json:
@@ -28,12 +27,29 @@ const router = express.Router();
  *               username:
  *                 type: string
  *                 example: testuser
+ *               user_id:
+ *                 type: string
+ *                 example: testuser123
  *               password:
  *                 type: string
  *                 example: testpassword
  *     responses:
  *       201:
- *         description: 회원가입 성공
+ *         description: 회원가입 성공 (사용자 ID 반환)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 회원가입 성공
+ *                 id:
+ *                   type: integer
+ *                   example: 1
  *       400:
  *         description: 잘못된 요청 (입력값 부족 혹은 규칙 위반)
  *       500:
@@ -48,22 +64,36 @@ router.post('/register', register);
  *     summary: 로그인
  *     tags: [Auth]
  *     requestBody:
- *       description: 로그인 시 필요한 정보
+ *       description: 로그인 시 필요한 정보 (사용자명 또는 로그인용 ID와 비밀번호)
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               user_id:
  *                 type: string
- *                 example: testuser
+ *                 example: testuser123
  *               password:
  *                 type: string
  *                 example: testpassword
  *     responses:
  *       200:
- *         description: 로그인 성공 (토큰 발급)
+ *         description: 로그인 성공 (JWT 토큰 발급)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 로그인 성공
+ *                 token:
+ *                   type: string
+ *                   example: 'jwt.token.here'
  *       400:
  *         description: 잘못된 요청 (입력값 부족)
  *       401:
