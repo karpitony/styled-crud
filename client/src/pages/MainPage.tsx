@@ -1,7 +1,9 @@
+import BoardList from "@/components/Main/BoardList";
+
 export default function MainPage() {
   return (
     <div>
-      <h1>Main Page</h1>
+      <BoardList />
     </div>
   );
 }
