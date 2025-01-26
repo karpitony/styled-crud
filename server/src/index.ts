@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import corsConfig from './config/corsConfig';
 import { connectDB } from './database/db';
 import authRoutes from './routes/authRoutes';
+import boardRoutes from './routes/boardRoutes';
 import errorHandler from './middlewares/errorHandler';
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
     });
 
     app.use('/auth', authRoutes);
+    app.use('/', boardRoutes);
 
     // 에러 핸들러 (항상 마지막)
     app.use(errorHandler);

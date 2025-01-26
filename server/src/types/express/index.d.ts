@@ -1,12 +1,17 @@
 import { Database } from 'sqlite3';
+import jwt from 'jsonwebtoken';
+import { DecodedToken } from '../../middlewares/authMiddleware';
 
 declare global {
   namespace Express {
     interface Application {
       get(key: 'db'): Database;
     }
+
     interface Request {
-      user?: string | jwt.JwtPayload; 
+      user?: DecodedToken | string | jwt.JwtPayload;
     }
   }
 }
+
+export {};
