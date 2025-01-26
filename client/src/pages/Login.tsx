@@ -1,13 +1,4 @@
-import {
-  Container,
-  Title,
-  Form,
-  Label,
-  Input,
-  Button as LoginButton,
-  OutlineButton,
-  Link as ForgotPassword,
-} from "@/components/common/Form.styled";
+import * as S from "@/components/common/Form.styled";
 import { useNavigate } from "react-router";
 import { useState } from 'react';
 import { useAuth } from "@/hooks/useAuth";
@@ -33,11 +24,11 @@ export default function Login() {
   };
 
   return (
-    <Container>
-      <Title>로그인</Title>
-      <Form onSubmit={onSubmit}>
-        <Label htmlFor="id">아이디</Label>
-        <Input
+    <S.Container>
+      <S.Title>로그인</S.Title>
+      <S.Form onSubmit={onSubmit}>
+        <S.Label htmlFor="id">아이디</S.Label>
+        <S.Input
           type="text"
           id="id"
           placeholder="아이디를 입력하세요"
@@ -45,8 +36,8 @@ export default function Login() {
           onChange={(e) => setUserId(e.target.value)}
         />
 
-        <Label htmlFor="password">비밀번호</Label>
-        <Input
+        <S.Label htmlFor="password">비밀번호</S.Label>
+        <S.Input
           type="password"
           id="password"
           placeholder="비밀번호를 입력하세요"
@@ -54,14 +45,14 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <ForgotPassword href="#">비밀번호를 잊으셨나요?</ForgotPassword>
+        <S.Link href="#">비밀번호를 잊으셨나요?</S.Link>
 
-        <LoginButton type="submit">로그인</LoginButton>
+        <S.Button type="submit">로그인</S.Button>
 
-        <OutlineButton onClick={() => navigate("/register")}>
+        <S.OutlineButton onClick={() => navigate("/register")}>
           회원가입 하러 가기
-        </OutlineButton>
-      </Form>
-    </Container>
+        </S.OutlineButton>
+      </S.Form>
+    </S.Container>
   );
 }

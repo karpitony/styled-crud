@@ -1,12 +1,4 @@
-import {
-  Container,
-  Title,
-  Form,
-  Label,
-  Input,
-  Button as RegisterButton,
-  OutlineButton,
-} from "@/components/common/Form.styled";
+import * as S from "@/components/common/Form.styled";
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -40,11 +32,11 @@ export default function Register() {
   };
 
   return (
-    <Container>
-      <Title>회원가입</Title>
-      <Form onSubmit={onSubmit}>
-        <Label htmlFor="id">아이디</Label>
-        <Input
+    <S.Container>
+      <S.Title>회원가입</S.Title>
+      <S.Form onSubmit={onSubmit}>
+        <S.Label htmlFor="id">아이디</S.Label>
+        <S.Input
           type="text"
           id="id"
           placeholder="아이디를 입력하세요"
@@ -52,8 +44,8 @@ export default function Register() {
           onChange={(e) => setUserId(e.target.value)}
         />
 
-        <Label htmlFor="nickname">닉네임</Label>
-        <Input
+        <S.Label htmlFor="nickname">닉네임</S.Label>
+        <S.Input
           type="text"
           id="nickname"
           placeholder="닉네임을 입력하세요"
@@ -61,8 +53,8 @@ export default function Register() {
           onChange={(e) => setUsername(e.target.value)}
         />
 
-        <Label htmlFor="password">비밀번호</Label>
-        <Input
+        <S.Label htmlFor="password">비밀번호</S.Label>
+        <S.Input
           type="password"
           id="password"
           placeholder="비밀번호를 입력하세요"
@@ -70,8 +62,8 @@ export default function Register() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Label htmlFor="confirmPassword">비밀번호 확인</Label>
-        <Input
+        <S.Label htmlFor="confirmPassword">비밀번호 확인</S.Label>
+        <S.Input
           type="password"
           id="confirmPassword"
           placeholder="비밀번호를 다시 입력하세요"
@@ -79,11 +71,11 @@ export default function Register() {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         
-        <RegisterButton type="submit">회원가입</RegisterButton>
-        <OutlineButton onClick={() => alert("로그인 페이지로 이동")}>
+        <S.Button type="submit">회원가입</S.Button>
+        <S.OutlineButton onClick={() => alert("로그인 페이지로 이동")}>
           로그인으로 돌아가기
-        </OutlineButton>
-      </Form>
-    </Container>
+        </S.OutlineButton>
+      </S.Form>
+    </S.Container>
   );
 }
