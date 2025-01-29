@@ -17,10 +17,6 @@ export const refreshToken = async (): Promise<RefreshTokenResponse> => {
   return response.data;
 };
 
-export const logout = async (): Promise<void> => {
-  await apiConfig.post('/auth/logout');
-};
-
 export async function registerUser(data: RegisterRequest): Promise<RegisterResponse> {
   const response = await apiConfig.post<RegisterResponse>('/auth/register', data);
   return response.data;
