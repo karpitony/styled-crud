@@ -1,5 +1,5 @@
 import express from 'express';
-import { getBoardList, createBoard } from '../controllers/boardController';
+import { getBoardList, createBoardHandler } from '../controllers/boardController';
 import authMiddleware from '../middlewares/authMiddleware'; // JWT 인증 미들웨어
 
 const router = express.Router();
@@ -115,6 +115,6 @@ const router = express.Router();
  */
 
 router.get('/board', getBoardList); 
-router.post('/board', authMiddleware, createBoard);
+router.post('/board', authMiddleware, createBoardHandler);
 
 export default router;
