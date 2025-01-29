@@ -90,7 +90,7 @@ export const login: RequestHandler = async (req, res) => {
 
     // JWT 토큰 발급
     const token = jwt.sign(
-      { id: user.id, username: user.username },
+      { id: user.id, username: user.username } as DecodedToken,
       JWT_SECRET,
       { expiresIn: '1h' } // 토큰 유효 기간
     );
@@ -100,6 +100,8 @@ export const login: RequestHandler = async (req, res) => {
       message: '로그인 성공',
       token,
     });
+    return ;
+
   } catch (err: any) {
     console.error('로그인 에러:', err.message);
     res.status(500).json({
@@ -107,5 +109,6 @@ export const login: RequestHandler = async (req, res) => {
       message: '로그인 실패',
       error: err.message,
     });
+    return ;
   }
 };

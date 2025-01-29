@@ -2,7 +2,9 @@
 
 # Styled-Component와 CRUD 연습 게시판 프로젝트
 
-## 서버 폴더구조
+## 서버
+
+### 서버 폴더구조
 ```
 project-root/
 ├── app.js                   // Express 서버 설정
@@ -31,3 +33,11 @@ project-root/
 ├── package.json             // 프로젝트 설정
 └── README.md                // 프로젝트 설명
 ```
+
+### 서버 트러블 슈팅
+#### 처음 시작하는 node.js여서 고민되는 폴더구조
+- model과 controller의 분리여부
+- 미들웨어의 사용 이유와 사용 시점
+
+#### jwt에 포함해야할 정보와 넣지 말아야 할 정보
+- 처음엔 로그인시 사용하는 id도 함께 포함하려 했으나, 보안상 이유로 db에서 부여한 id와 username만 삽입
