@@ -14,7 +14,6 @@ export default function Boardlist() {
       setLoading(true);
       setError(null);
       try {
-        // boardService에서 GET /board API 호출
         const response = await getBoardList();
         if (response.success) {
           if (response.data.length === 0) {
@@ -41,21 +40,39 @@ export default function Boardlist() {
   return (
     <Container>
       <Title>Board List</Title>
-      {boards.map((board) => (
-        <BoardItem key={board.id} board={board} />
-      ))}
+      <BoardGrid>
+        {boards.map((board) => (
+          <BoardItem key={board.id} board={board} />
+        ))}
+      </BoardGrid>
     </Container>
   );
 }
 
-// 스타일드 컴포넌트 예시
+// 스타일드 컴포넌트
 const Container = styled.div`
   margin: 20px auto;
-  max-width: 600px;
+  max-width: 1200px;
+  padding: 0 16px;
 `;
 
 const Title = styled.h1`
   margin-bottom: 16px;
   color: #333;
   text-align: center;
+`;
+
+const BoardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  justify-content: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
