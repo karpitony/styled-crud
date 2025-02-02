@@ -35,7 +35,7 @@ const router = express.Router();
  *                 example: testpassword
  *     responses:
  *       201:
- *         description: 회원가입 성공 (사용자 ID 반환)
+ *         description: 회원가입 성공 (사용자 이름 반환)
  *         content:
  *           application/json:
  *             schema:
@@ -47,9 +47,9 @@ const router = express.Router();
  *                 message:
  *                   type: string
  *                   example: 회원가입 성공
- *                 id:
- *                   type: integer
- *                   example: 1
+ *                 username:
+ *                   type: string
+ *                   example: testuser
  *       400:
  *         description: 잘못된 요청 (입력값 부족 혹은 규칙 위반)
  *       500:

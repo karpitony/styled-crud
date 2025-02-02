@@ -1,11 +1,5 @@
 import { Database } from 'sqlite3'; // sqlite3 Database 타입 가져오기
-
-type User = {
-  id?: number; // id는 선택적 (생성된 후 추가됨)
-  username: string;
-  user_id: string; // 로그인, 마이페이지 라우트에 사용할 ID
-  password: string;
-};
+import { User } from '../types/userTypes';
 
 
 // user_id로 유저 검색
@@ -47,7 +41,7 @@ export async function createUser(
   username: string,
   user_id: string,
   hashedPassword: string
-): Promise<number> 
+): Promise<string> 
 {
   const query = `INSERT INTO users (username, user_id, password) VALUES (?, ?, ?)`;
   return new Promise((resolve, reject) => {
@@ -55,7 +49,7 @@ export async function createUser(
       if (err) {
         return reject(err);
       }
-      resolve(this.lastID); // 생성된 유저의 ID 반환
+      resolve(username); // 생성된 유저의 이름 반환
     });
   });
 };

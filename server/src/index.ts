@@ -7,6 +7,7 @@ import corsConfig from './config/corsConfig';
 import { connectDB } from './database/db';
 import authRoutes from './routes/authRoutes';
 import boardRoutes from './routes/boardRoutes';
+import postRoutes from './routes/postRoutes';
 import errorHandler from './middlewares/errorHandler';
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 
     app.use('/auth', authRoutes);
     app.use('/', boardRoutes);
+    app.use('/', postRoutes);
 
     // 에러 핸들러 (항상 마지막)
     app.use(errorHandler);
