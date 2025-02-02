@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { getPostsByBoard, getTotalPostCountByBoard } from '../models/postModel';
+import { getPostsByBoard, getTotalPostCountByBoard } from '../../models/postModel';
 
 // 특정 게시판의 최신 게시글 목록 조회 (페이지네이션 포함)
 export const getPostListByBoard: RequestHandler = async (req, res) => {
