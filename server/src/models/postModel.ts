@@ -53,3 +53,71 @@ export async function getTotalPostCountByBoard(
     });
   });
 }
+
+// 게시글 작성
+export async function createPost(
+  db: Database,
+  board_id: number,
+  user_id: number,
+  title: string,
+  content: string
+): Promise<number> {
+  const query = `
+    INSERT INTO posts (board_id, user_id, title, content)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  return new Promise((resolve, reject) => {
+    db.run(query, [board_id, user_id, title, content], function (err) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(this.lastID); // 생성된 게시글의 ID 반환
+    });
+  });
+}
+
+// 게시글 수정
+export async function updatePost(
+  db: Database,
+  post_id: number,
+  user_id: number, // 본인만 수정 가능하도록 검증
+  title: string,
+  content: string
+): Promise<boolean> {
+  const query = `
+    UPDATE posts
+    SET title = ?, content = ?
+    WHERE id = ? AND user_id = ?
+  `;
+
+  return new Promise((resolve, reject) => {
+    db.run(query, [title, content, post_id, user_id], function (err) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(this.changes > 0); // 수정된 행이 있으면 true 반환
+    });
+  });
+}
+
+// 게시글 삭제
+export async function deletePost(
+  db: Database,
+  post_id: number,
+  user_id: number // 본인만 삭제 가능하도록 검증
+): Promise<boolean> {
+  const query = `
+    DELETE FROM posts
+    WHERE id = ? AND user_id = ?
+  `;
+
+  return new Promise((resolve, reject) => {
+    db.run(query, [post_id, user_id], function (err) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(this.changes > 0); // 삭제된 행이 있으면 true 반환
+    });
+  });
+}
