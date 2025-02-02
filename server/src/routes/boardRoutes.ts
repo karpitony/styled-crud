@@ -61,7 +61,7 @@ const router = express.Router();
  *     tags: [Board]
  *     description: JWT 인증을 거쳐 새 게시판을 생성합니다.
  *     security:
- *       - bearerAuth: []  # JWT 인증을 위한 swagger 설정 (swagger.ts에서 bearerAuth 추가 필요)
+ *       - bearerAuth: []
  *     requestBody:
  *       description: 게시판 생성에 필요한 정보
  *       required: true

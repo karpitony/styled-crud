@@ -1,4 +1,5 @@
 import express from 'express';
+import authMiddleware from '../middlewares/authMiddleware';
 import {
   createPostHandler,
   updatePostHandler,
@@ -21,8 +22,7 @@ const router = express.Router();
  *   get:
  *     summary: 게시글 단일 조회
  *     description: 특정 게시글을 단일로 조회합니다.
- *     tags:
- *       - Posts
+ *     tags: [Posts]
  *     parameters:
  *       - in: path
  *         name: post_id
@@ -99,8 +99,9 @@ router.get('/:post_id', getPostByIdHandler);
  *   post:
  *     summary: 게시글 작성
  *     description: 새 게시글을 작성합니다. (로그인 필요)
- *     tags:
- *       - Posts
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -182,16 +183,24 @@ router.get('/:post_id', getPostByIdHandler);
  *                 error:
  *                   type: string
  */
-router.post('/', createPostHandler);
+router.post('/', authMiddleware, createPostHandler);
 
 /**
  * @swagger
- * /posts:
+ * /posts/{post_id}:
  *   put:
  *     summary: 게시글 수정
  *     description: 기존 게시글을 수정합니다. 본인만 수정 가능.
- *     tags:
- *       - Posts
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: post_id
+ *         required: true
+ *         description: "수정할 게시글 ID"
+ *         schema:
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
@@ -199,13 +208,9 @@ router.post('/', createPostHandler);
  *           schema:
  *             type: object
  *             required:
- *               - post_id
  *               - title
  *               - content
  *             properties:
- *               post_id:
- *                 type: integer
- *                 example: 1
  *               title:
  *                 type: string
  *                 example: "수정된 게시글 제목"
@@ -238,7 +243,7 @@ router.post('/', createPostHandler);
  *                   example: false
  *                 message:
  *                   type: string
- *                   example: "post_id, title, content는 필수입니다."
+ *                   example: "title, content는 필수입니다."
  *       401:
  *         description: 인증 실패 (로그인 안됨)
  *         content:
@@ -279,28 +284,24 @@ router.post('/', createPostHandler);
  *                 error:
  *                   type: string
  */
-router.put('/', updatePostHandler);
+router.put('/:post_id', authMiddleware, updatePostHandler);
 
 /**
  * @swagger
- * /posts:
+ * /posts/{post_id}:
  *   delete:
  *     summary: 게시글 삭제
  *     description: 게시글을 삭제합니다. 본인만 삭제 가능.
- *     tags:
- *       - Posts
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - post_id
- *             properties:
- *               post_id:
- *                 type: integer
- *                 example: 1
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: post_id
+ *         required: true
+ *         description: "삭제할 게시글 ID"
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: 게시글 삭제 성공
@@ -368,6 +369,6 @@ router.put('/', updatePostHandler);
  *                 error:
  *                   type: string
  */
-router.delete('/', deletePostHandler);
+router.delete('/:post_id', authMiddleware, deletePostHandler);
 
 export default router;

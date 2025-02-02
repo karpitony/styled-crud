@@ -6,7 +6,8 @@ export const updatePostHandler: RequestHandler = async (req: any, res) => {
     const db = req.app.get('db');
     if (!db) throw new Error('DB 연결 정보가 없습니다.');
 
-    const { post_id, title, content } = req.body;
+    const post_id = parseInt(req.params.post_id, 10);
+    const { title, content } = req.body;
     const user_id = req.user?.id; // JWT에서 인증된 사용자 ID 가져오기
 
     if (!user_id) {
