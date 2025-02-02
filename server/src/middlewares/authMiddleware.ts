@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { DecodedToken } from '../types/userTypes';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // JWT_SECRET을 환경 변수에서 가져오기
 if (!process.env.JWT_SECRET) {
